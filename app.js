@@ -1,25 +1,9 @@
-var mysql = require("mysql");
 var inquirer = require("inquirer");
 var db = require("./db.js");
 require("console.table");
 
-// create the connection information for the sql database
-var connection = mysql.createConnection({
-  host: "localhost",
-
-  // Your port; if not 3306
-  port: 3306,
-
-  // Your username
-  user: "root",
-
-  // Your password
-  password: "8912",
-  database: "employee_trackerDB",
-});
-
 // connect to the mysql server and sql database
-connection.connect(function (err) {
+db.connect(function (err) {
   if (err) throw err;
   // run the start function after the connection is made to prompt the user
   init();
@@ -44,9 +28,9 @@ function init() {
     })
     .then(function (response) {
       // based on their answer, either call the bid or the post functions
-      switch(response.menu){
+      switch (response.menu) {
         case "View all Employees":
-          db.viewEmployees();
+          db.viewEmployees(showResults);
           break;
         case "View all Employees by Department":
           viewEmployeeDepartment();
@@ -70,4 +54,9 @@ function init() {
           process.exit();
       }
     });
+}
+
+function showResults(error, results) {
+  console.log(error);
+  console.table(results);
 }
