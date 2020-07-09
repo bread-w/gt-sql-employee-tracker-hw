@@ -28,7 +28,17 @@ function viewEmployees(callback) {
   });
 }
 
+function viewEmployeeDepartment(callback) {
+  connection.query("SELECT * FROM department", function (error, results, fields) {
+    // console.log(error);
+    // console.log(results);
+    // console.log(fields);
+    callback(error, results);
+  });
+}
+
 module.exports = {
   connect,
   viewEmployees,
+  viewEmployeeDepartment,
 };
