@@ -1,0 +1,24 @@
+{
+  "name": "gt-sql-employee-tracker-hw",
+  "version": "1.0.0",
+  "description": "MySQL HW: Employee Tracker",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bread-w/gt-sql-employee-tracker-hw.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bread-w/gt-sql-employee-tracker-hw/issues"
+  },
+  "homepage": "https://github.com/bread-w/gt-sql-employee-tracker-hw#readme",
+  "dependencies": {
+    "console.table": "^0.10.0",
+    "inquirer": "^7.3.0",
+    "mysql": "^2.18.1"
+  }
+}
