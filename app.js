@@ -27,20 +27,12 @@ connection.connect(function(err) {
 function init(){
      inquirer
   .prompt({
-    name: "",
-    type: "",
-    message: "",
-    choices: []
+    name: "menu",
+    type: "choices",
+    message: "What would you like to do?",
+    choices: ["View all Employees","View all Employees by Department","View all Employees by Manager","Add Employee","Remove Employee","Update Employee Role","Update Employee Manager"]
   })
-//   .then(function(answer) {
-//     // based on their answer, either call the bid or the post functions
-//     if () {
-//       postAuction();
-//     }
-//     else if() {
-//       bidAuction();
-//     } else{
-//       connection.end();
-//     }
-//   });
+  // .then(function(answer) {
+  //   // based on their answer, either call the bid or the post functions
+  // });
 }
