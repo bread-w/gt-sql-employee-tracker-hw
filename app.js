@@ -39,7 +39,7 @@ function init() {
           db.viewEmployeeManager();
           break;
         case "Add Employee":
-          db.addEmployee(showResults);
+          db.addEmployee(newEmployee);
           break;
         case "Remove Employee":
           db.removeEmployee();
@@ -57,10 +57,15 @@ function init() {
 }
 
 function showResults(error, results) {
+  console.log(error);
+  console.table(results);
+}
+
+function newEmployee(error, results) {
   // console.log(error);
   // console.table(results);
 }
 
-module.exports = {
-  init,
-};
+// module.exports = {
+//   init,
+// }
