@@ -1,6 +1,5 @@
 var mysql = require("mysql");
 const inquirer = require("inquirer");
-const app = require("./app.js");
 var connection;
 
 function connect(callback) {
@@ -94,12 +93,13 @@ function addEmployee(callback) {
           },
           function (error) {
             if (error) throw error;
+            callback(error, results);
           }
         );
-        // app.init();
         // process.exit();
       });
-    callback(error, results);
+   
+
   });
 }
 

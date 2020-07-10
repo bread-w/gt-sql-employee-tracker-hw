@@ -2,13 +2,6 @@ var inquirer = require("inquirer");
 var db = require("./db.js");
 require("console.table");
 
-// connect to the mysql server and sql database
-db.connect(function (err) {
-  if (err) throw err;
-  // run the start function after the connection is made to prompt the user
-  init();
-});
-
 function init() {
   inquirer
     .prompt({
@@ -64,8 +57,11 @@ function showResults(error, results) {
 function newEmployee(error, results) {
   // console.log(error);
   // console.table(results);
+  init();
 }
-
-// module.exports = {
-//   init,
-// }
+// connect to the mysql server and sql database
+db.connect(function (err) {
+  if (err) throw err;
+  // run the start function after the connection is made to prompt the user
+  init();
+});
