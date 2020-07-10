@@ -1,6 +1,6 @@
 var inquirer = require("inquirer");
 var db = require("./db.js");
-require("console.table");
+// require("console.table");
 
 function init() {
   inquirer

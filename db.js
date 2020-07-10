@@ -99,7 +99,6 @@ function addEmployee(callback) {
             callback(error, results);
           }
         );
-        // process.exit();
       });
   });
 }
