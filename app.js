@@ -52,6 +52,7 @@ function init() {
 function showResults(error, results) {
   // console.log(error);
   console.table(results);
+  init();
 }
 
 function newEmployee(error, results) {

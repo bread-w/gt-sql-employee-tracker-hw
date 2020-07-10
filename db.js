@@ -21,12 +21,15 @@ function connect(callback) {
 }
 
 function viewEmployees(callback) {
-  connection.query("SELECT employee.id, employee.first_name, employee.last_name, department.department_name, role.salary, manager.first_name AS manager_first, manager.last_name AS manager_last FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id LEFT JOIN employee manager ON manager.id = employee.manager_id;", function (error, results, fields) {
-    // console.log(error);
-    // console.log(results);
-    // console.log(fields);
-    callback(error, results);
-  });
+  connection.query(
+    "SELECT employee.id, employee.first_name, employee.last_name, department.department_name, role.salary, manager.first_name AS manager_first, manager.last_name AS manager_last FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id LEFT JOIN employee manager ON manager.id = employee.manager_id;",
+    function (error, results, fields) {
+      // console.log(error);
+      // console.log(results);
+      // console.log(fields);
+      callback(error, results);
+    }
+  );
 }
 
 function viewEmployeeDepartment(callback) {
@@ -98,8 +101,6 @@ function addEmployee(callback) {
         );
         // process.exit();
       });
-   
-
   });
 }
 
