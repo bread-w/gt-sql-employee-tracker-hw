@@ -13,6 +13,8 @@ function init() {
         "View all Employees by Department",
         "View all Employees by Manager",
         "Add Employee",
+        "Add a Department",
+        "Add a Role",
         "Remove Employee",
         "Update Employee Role",
         "Update Employee Manager",
@@ -33,6 +35,12 @@ function init() {
           break;
         case "Add Employee":
           db.addEmployee(newEmployee);
+          break;
+        case "Add a Department":
+          db.addDepartment(newDepartment);
+          break;
+          case "Add a Role":
+          db.addRole(newRole);
           break;
         case "Remove Employee":
           db.removeEmployee();
@@ -56,6 +64,18 @@ function showResults(error, results) {
 }
 
 function newEmployee(error, results) {
+  // console.log(error);
+  // console.table(results);
+  init();
+}
+
+function newDepartment(error, results) {
+  // console.log(error);
+  // console.table(results);
+  init();
+}
+
+function newRole(error, results) {
   // console.log(error);
   // console.table(results);
   init();
