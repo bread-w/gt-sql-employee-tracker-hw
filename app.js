@@ -57,6 +57,10 @@ function init() {
 }
 
 function showResults(error, results) {
-  console.log(error);
-  console.table(results);
+  // console.log(error);
+  // console.table(results);
 }
+
+module.exports = {
+  init:init,
+};

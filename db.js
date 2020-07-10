@@ -1,5 +1,7 @@
 var mysql = require("mysql");
 const inquirer = require("inquirer");
+const app = require("./app.js");
+const {init} = require("./app.js");
 var connection;
 
 function connect(callback) {
@@ -30,12 +32,15 @@ function viewEmployees(callback) {
 }
 
 function viewEmployeeDepartment(callback) {
-  connection.query("SELECT department.id, department.name, employee.first_name, employee.last_name, role.title FROM department LEFT JOIN employee ON department.id = employee.role_id LEFT JOIN role ON department.id = role.department_id;", function (error, results, fields) {
-    // console.log(error);
-    // console.log(results);
-    // console.log(fields);
-    callback(error, results);
-  });
+  connection.query(
+    "SELECT department.id, department.name, employee.first_name, employee.last_name, role.title FROM department LEFT JOIN employee ON department.id = employee.role_id LEFT JOIN role ON department.id = role.department_id;",
+    function (error, results, fields) {
+      // console.log(error);
+      // console.log(results);
+      // console.log(fields);
+      callback(error, results);
+    }
+  );
 }
 
 function addEmployee(callback) {
@@ -68,14 +73,19 @@ function addEmployee(callback) {
             newEmployee = results[i];
           }
         }
-        const {f_Name, l_Name } = response;
-        connection.query("INSERT INTO employee SET ?",
-        {
-          first_name: f_Name,
-          last_name: l_Name,
-          role_id: newEmployee.id,
-        },
-        )
+        const { f_Name, l_Name } = response;
+        connection.query(
+          "INSERT INTO employee SET ?",
+          {
+            first_name: f_Name,
+            last_name: l_Name,
+            role_id: newEmployee.id,
+          },
+          function (error) {
+            if (error) throw error;
+          }
+        );
+        // init();
       });
     callback(error, results);
   });
