@@ -39,16 +39,16 @@ function init() {
           db.viewEmployeeManager();
           break;
         case "Add Employee":
-          addEmployee();
+          db.addEmployee();
           break;
         case "Remove Employee":
-          removeEmployee();
+          db.removeEmployee();
           break;
         case "Update Employee Role":
-          updateEmployeeRole();
+          db.updateEmployeeRole();
           break;
         case "Update Employee Manager":
-          updateEmployeeManager();
+          db.updateEmployeeManager();
           break;
         default:
           process.exit();
