@@ -33,13 +33,13 @@ function init() {
           db.viewEmployees(showResults);
           break;
         case "View all Employees by Department":
-          db.viewEmployeeDepartment(showResults);
+          db.viewEmployeeDepartment();
           break;
         case "View all Employees by Manager":
           db.viewEmployeeManager();
           break;
         case "Add Employee":
-          db.addEmployee();
+          db.addEmployee(showResults);
           break;
         case "Remove Employee":
           db.removeEmployee();

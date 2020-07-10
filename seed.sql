@@ -33,7 +33,7 @@ INSERT INTO department (name)
 VALUES ("Sales & Marketing"), ("Finance"), ("Operations"), ("Human Resources"), ("Engineering");
 
 INSERT INTO role (title, salary, department_id)
-VALUES ("CMO", 100.000, 1), ("CFO", 100.000, 2), ("COO", 100.000, 3), ("CCO", 100.000, 4), ("CTO", 100.000, 5), ("Sales Manager", 75.000, 1), ("Account Manager", 75.000, 2), ("General Manager", 75.000, 3), ("Benefits Manager", 75.000, 4), ("Senior Developer", 75.000, 5), ("Sales Representative", 50.000, 1), ("Account Representative", 50.000, 2), ("Assistant Manager", 50.000, 3), ("Benefits Liason", 50.000, 4), ("Junior Developer", 50.000, 5);
+VALUES ("Director of Marketing", 100.000, 1), ("Director of Finance", 100.000, 2), ("Director of Operations", 100.000, 3), ("HR Director", 100.000, 4), ("CTO", 100.000, 5), ("Sales Manager", 75.000, 1), ("Account Manager", 75.000, 2), ("General Manager", 75.000, 3), ("Benefits Manager", 75.000, 4), ("Senior Developer", 75.000, 5), ("Sales Representative", 50.000, 1), ("Account Representative", 50.000, 2), ("Assistant Manager", 50.000, 3), ("Benefits Liason", 50.000, 4), ("Junior Developer", 50.000, 5);
 
 INSERT INTO employee (first_name, last_name, role_id)
 VALUES ("Carol", "Danvers", 1), ("Tony", "Stark", 2), ("Steve", "Rogers", 3), ("Thor", "Odinson", 4), ("Bruce", "Banner", 5), ("Natasha", "Romanoff", 6), ("Pepper", "Potts", 7), ("Clint", "Barton", 8), ("Mary Jane", "Watson", 9), ("Peter", "Parker", 10), ("Augustus", "Gloop", 11), ("Violet", "Beauregarde", 12), ("Veruca", "Salt", 13), ("Mike", "Teavee", 14), ("Charlie", "Bucket", 15);
