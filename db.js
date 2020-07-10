@@ -96,7 +96,7 @@ function addEmployee(callback) {
             if (error) throw error;
           }
         );
-        app.init();
+        // app.init();
         // process.exit();
       });
     callback(error, results);

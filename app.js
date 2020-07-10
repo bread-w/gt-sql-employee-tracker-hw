@@ -66,6 +66,6 @@ function newEmployee(error, results) {
   // console.table(results);
 }
 
-module.exports = {
-  init,
-}
+// module.exports = {
+//   init,
+// }
