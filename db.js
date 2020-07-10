@@ -126,56 +126,56 @@ function addDepartment(callback) {
     });
 }
 
-// function addRole(callback) {
-//   connection.query("SELECT * FROM department", function (
-//     error,
-//     results,
-//     fields
-//   ) {
-//     if (error) throw error;
-//     const departmentArray = results.map((entry) => entry.name);
-//     inquirer
-//       .prompt([
-//         {
-//           name: "addRole",
-//           type: "input",
-//           message: "What role would you like to add?",
-//         },
-//         {
-//           name: "newSalary",
-//           type: "input",
-//           message: "What is the salary of this new role?",
-//         },
-//         {
-//           name: "departmentId",
-//           type: "list",
-//           message: "Which Department would you like to add this role into?",
-//           choices: departmentArray,
-//         },
-//       ])
-//       .then((response) => {
-//         let newRole = {};
-//         for (let i = 0; i < results.length; i++) {
-//           if (results[i].name === response.departmentId) {
-//             newRole = results[i];
-//           }
-//         }
-//         const { addRole, newSalary } = response;
-//         connection.query(
-//           "INSERT INTO role SET ?",
-//           {
-//             title: addRole,
-//             salary: newSalary,
-//             department_id: newRole.id,
-//           },
-//           function (error) {
-//             if (error) throw error;
-//             callback(error, results);
-//           }
-//         );
-//       });
-//   });
-// }
+function addRole(callback) {
+  connection.query("SELECT * FROM department", function (
+    error,
+    results,
+    fields
+  ) {
+    if (error) throw error;
+    const departmentArray = results.map((entry) => entry.department_name);
+    inquirer
+      .prompt([
+        {
+          name: "addRole",
+          type: "input",
+          message: "What role would you like to add?",
+        },
+        {
+          name: "newSalary",
+          type: "input",
+          message: "What is the salary of this new role?",
+        },
+        {
+          name: "departmentId",
+          type: "list",
+          message: "Which Department would you like to add this role into?",
+          choices: departmentArray,
+        },
+      ])
+      .then((response) => {
+        let newRole = {};
+        for (let i = 0; i < results.length; i++) {
+          if (results[i].name === response.departmentId) {
+            newRole = results[i];
+          }
+        }
+        const { addRole, newSalary } = response;
+        connection.query(
+          "INSERT INTO role SET ?",
+          {
+            title: addRole,
+            salary: newSalary,
+            department_id: newRole.id,
+          },
+          function (error) {
+            if (error) throw error;
+            callback(error, results);
+          }
+        );
+      });
+  });
+}
 
 module.exports = {
   connect,
@@ -184,5 +184,5 @@ module.exports = {
   viewEmployeeManager,
   addEmployee,
   addDepartment,
-  // addRole,
+  addRole,
 };
