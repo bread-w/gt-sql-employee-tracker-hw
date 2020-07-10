@@ -30,7 +30,7 @@ function viewEmployees(callback) {
 }
 
 function viewEmployeeDepartment(callback) {
-  connection.query("", function (error, results, fields) {
+  connection.query("SELECT department.id, department.name, employee.first_name, employee.last_name, role.title FROM department LEFT JOIN employee ON department.id = employee.role_id LEFT JOIN role ON department.id = role.department_id;", function (error, results, fields) {
     // console.log(error);
     // console.log(results);
     // console.log(fields);
