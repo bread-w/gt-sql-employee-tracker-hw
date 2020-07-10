@@ -29,12 +29,15 @@ function viewEmployees(callback) {
 }
 
 function viewEmployeeDepartment(callback) {
-  connection.query("SELECT * FROM department", function (error, results, fields) {
-    // console.log(error);
-    // console.log(results);
-    // console.log(fields);
-    callback(error, results);
-  });
+  connection.query(
+    "SELECT employee.id, employee.first_name, employee.last_name, department.name FROM employee RIGHT JOIN department ON employee.id = department.id ORDER BY employee.id;",
+    function (error, results, fields) {
+      // console.log(error);
+      // console.log(results);
+      // console.log(fields);
+      callback(error, results);
+    }
+  );
 }
 
 module.exports = {
