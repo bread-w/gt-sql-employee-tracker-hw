@@ -36,7 +36,7 @@ function init() {
           db.viewEmployeeDepartment(showResults);
           break;
         case "View all Employees by Manager":
-          db.viewEmployeeManager();
+          db.viewEmployeeManager(showResults);
           break;
         case "Add Employee":
           db.addEmployee(newEmployee);

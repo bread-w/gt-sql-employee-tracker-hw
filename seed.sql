@@ -39,7 +39,7 @@ VALUES ("Director of Marketing", 100.000, 1), ("Director of Finance", 100.000, 2
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES ("Carol", "Danvers", 1, null), ("Tony", "Stark", 2, null), ("Steve", "Rogers", 3, null), ("Thor", "Odinson", 4, null), ("Bruce", "Banner", 5, null), ("Natasha", "Romanoff", 6, 1), ("Pepper", "Potts", 7, 2), ("Clint", "Barton", 8, 3), ("Mary Jane", "Watson", 9, 4), ("Peter", "Parker", 10, 5), ("Augustus", "Gloop", 11, 1), ("Violet", "Beauregarde", 12, 2), ("Veruca", "Salt", 13, 3), ("Mike", "Teavee", 14, 4), ("Charlie", "Bucket", 15, 5);
 
--- view employee
+-- view employee, department and manager
 SELECT employee.id, employee.first_name, employee.last_name, department.department_name, role.salary, 
 manager.first_name AS manager_first, manager.last_name AS manager_last 
 FROM employee 
@@ -47,10 +47,17 @@ LEFT JOIN role ON employee.role_id = role.id
 LEFT JOIN department ON role.department_id = department.id 
 LEFT JOIN employee manager ON manager.id = employee.manager_id;
 
--- view department, sorted by department
+-- view employee by department, sorted by department
 SELECT employee.id, employee.first_name, employee.last_name, department.department_name, role.salary, 
 manager.first_name AS manager_first, manager.last_name AS manager_last FROM employee 
 LEFT JOIN role ON employee.role_id = role.id 
 LEFT JOIN department ON role.department_id = department.id 
 LEFT JOIN employee manager ON manager.id = employee.manager_id 
 ORDER BY department_id;
+
+-- view employee by manager, ordered by manager
+SELECT employee.id, employee.first_name, employee.last_name, role.title, department.department_name, employee.manager_id, manager.first_name AS manager_first, manager.last_name AS manager_last FROM employee
+LEFT JOIN role ON employee.role_id = role.id
+LEFT JOIN department ON role.department_id = department.id
+LEFT JOIN employee manager ON manager.id = employee.manager_id
+ORDER BY employee.manager_id;
