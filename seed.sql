@@ -26,7 +26,8 @@ CREATE TABLE employee (
   role_id INT NOT NULL,
   manager_id INT,
   PRIMARY KEY (id),
-  FOREIGN KEY (role_id) REFERENCES role(id)
+  FOREIGN KEY (role_id) REFERENCES role(id),
+  FOREIGN KEY (manager_id) REFERENCES employee(id)
 );
 
 INSERT INTO department (department_name)
@@ -35,25 +36,21 @@ VALUES ("Sales & Marketing"), ("Finance"), ("Operations"), ("Human Resources"), 
 INSERT INTO role (title, salary, department_id)
 VALUES ("Director of Marketing", 100.000, 1), ("Director of Finance", 100.000, 2), ("Director of Operations", 100.000, 3), ("HR Director", 100.000, 4), ("CTO", 100.000, 5), ("Sales Manager", 75.000, 1), ("Account Manager", 75.000, 2), ("General Manager", 75.000, 3), ("Benefits Manager", 75.000, 4), ("Senior Developer", 75.000, 5), ("Sales Representative", 50.000, 1), ("Account Representative", 50.000, 2), ("Assistant Manager", 50.000, 3), ("Benefits Liason", 50.000, 4), ("Junior Developer", 50.000, 5);
 
-INSERT INTO employee (first_name, last_name, role_id)
-VALUES ("Carol", "Danvers", 1), ("Tony", "Stark", 2), ("Steve", "Rogers", 3), ("Thor", "Odinson", 4), ("Bruce", "Banner", 5), ("Natasha", "Romanoff", 6), ("Pepper", "Potts", 7), ("Clint", "Barton", 8), ("Mary Jane", "Watson", 9), ("Peter", "Parker", 10), ("Augustus", "Gloop", 11), ("Violet", "Beauregarde", 12), ("Veruca", "Salt", 13), ("Mike", "Teavee", 14), ("Charlie", "Bucket", 15);
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
+VALUES ("Carol", "Danvers", 1, null), ("Tony", "Stark", 2, null), ("Steve", "Rogers", 3, null), ("Thor", "Odinson", 4, null), ("Bruce", "Banner", 5, null), ("Natasha", "Romanoff", 6, 1), ("Pepper", "Potts", 7, 2), ("Clint", "Barton", 8, 3), ("Mary Jane", "Watson", 9, 4), ("Peter", "Parker", 10, 5), ("Augustus", "Gloop", 11, 1), ("Violet", "Beauregarde", 12, 2), ("Veruca", "Salt", 13, 3), ("Mike", "Teavee", 14, 4), ("Charlie", "Bucket", 15, 5);
 
-SELECT employee.id, employee.first_name, employee.last_name, department.department_name, role.salary, manager.first_name
-AS manager_last FROM employee
-LEFT JOIN role ON employee.role_id = role.id
-LEFT JOIN department ON role.department_id = department.id
-LEFT JOIN employee manager ON manager.id = employee.manager_id
+-- view employee
+SELECT employee.id, employee.first_name, employee.last_name, department.department_name, role.salary, 
+manager.first_name AS manager_first, manager.last_name AS manager_last 
+FROM employee 
+LEFT JOIN role ON employee.role_id = role.id 
+LEFT JOIN department ON role.department_id = department.id 
+LEFT JOIN employee manager ON manager.id = employee.manager_id;
+
+-- view department, sorted by department
+SELECT employee.id, employee.first_name, employee.last_name, department.department_name, role.salary, 
+manager.first_name AS manager_first, manager.last_name AS manager_last FROM employee 
+LEFT JOIN role ON employee.role_id = role.id 
+LEFT JOIN department ON role.department_id = department.id 
+LEFT JOIN employee manager ON manager.id = employee.manager_id 
 ORDER BY department_id;
-
-SELECT employee.id, employee.first_name, employee.last_name, role.title, department.department_name, employee.manager_id, manager.first_name AS manager_first, manager.last_name AS manager_last FROM employee
-LEFT JOIN role ON employee.role_id = role.id
-LEFT JOIN department ON role.department_id = department.id
-LEFT JOIN employee manager ON manager.id = employee.manager_id;
-
-SELECT employee.id, employee.first_name, employee.last_name, department.department_name, role.salary, manager.first_name AS manager_first, manager.last_name AS manager_last FROM employee
-LEFT JOIN role ON employee.role_id = role.id
-LEFT JOIN department ON role.department_id = department.id
-LEFT JOIN employee manager ON manager.id = employee.manager_id;
-
-SELECT role.title, role.salary, role.department_id, department.department_name FROM role
-LEFT JOIN department ON role.department_id = department.id;
