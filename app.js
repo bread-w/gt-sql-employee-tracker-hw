@@ -62,5 +62,5 @@ function showResults(error, results) {
 }
 
 module.exports = {
-  init:init,
+  init,
 };
