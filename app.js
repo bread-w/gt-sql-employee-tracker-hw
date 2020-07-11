@@ -15,9 +15,9 @@ function init() {
         "Add Employee",
         "Add a Department",
         "Add a Role",
-        "Update Employee",
+        // "Update Employee",
         "Update Employee Role",
-        "Update Employee Manager",
+        // "Update Employee Manager",
         "Remove Employee",
         "Exit",
       ],
@@ -43,17 +43,17 @@ function init() {
         case "Add a Role":
           db.addRole(newRole);
           break;
-        case "Update Employee":
-          db.updateEmployee(newEmployee);
-          break;
+        // case "Update Employee":
+        //   db.updateEmployee(newEmployee);
+        //   break;
         case "Update Employee Role":
-          db.updateEmployeeRole();
+          db.updateEmployeeRole(newRole);
           break;
-        case "Update Employee Manager":
-          db.updateEmployeeManager();
-          break;
+        // case "Update Employee Manager":
+        //   db.updateEmployeeManager();
+        //   break;
         case "Remove Employee":
-          db.removeEmployee();
+          db.removeEmployee(deleteEmployee);
           break;
         default:
           process.exit();
@@ -80,6 +80,12 @@ function newDepartment(error, results) {
 }
 
 function newRole(error, results) {
+  // console.log(error);
+  // console.table(results);
+  init();
+}
+
+function deleteEmployee(error, results) {
   // console.log(error);
   // console.table(results);
   init();

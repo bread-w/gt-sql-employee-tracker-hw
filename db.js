@@ -206,47 +206,152 @@ function addRole(callback) {
 //       });
 //   });
 // }
-function updateEmployee() {
+// function updateEmployee() {
+//   connection.query("SELECT * FROM employee", function (error, results) {
+//     if (error) throw error;
+//     const employeeArray = results.map(({ id, first_name, last_name }) => ({
+//       name: `${first_name} ${last_name}`,
+//       value: id,
+//     }));
+//     inquirer
+//       .prompt([
+//         {
+//           name: "employeeName",
+//           type: "list",
+//           message: "What employee would you like to update?",
+//           choices: employeeArray,
+//         },
+//         {
+//           name: "f_Name",
+//           type: "input",
+//           message: "What is the employee's first name?",
+//         },
+//         {
+//           name: "l_Name",
+//           type: "input",
+//           message: "What is the employee's last name?",
+//         },
+//       ])
+//       .then((response) => {
+//         let targetId;
+//         for (let i = 0; i < results.length; i++) {
+//           if (results[i].id === response.name) {
+//             targetId = results[i].id;
+//           }
+//         }
+//         connection.query(
+//           `UPDATE employee SET ? WHERE id = ?`,
+//           [response.f_Name, response.l_Name, targetId],
+//           function (error) {
+//             if (error) throw error;
+//             callback(error, results);
+//           }
+//         );
+//       });
+//   });
+// }
+
+function updateEmployeeRole(callback) {
+  connection.query("SELECT * FROM role", (error, results) => {
+    if (error) throw error;
+    connection.query("SELECT * FROM employee", (error, response) => {
+      if (error) throw error;
+      inquirer
+        .prompt([
+          {
+            name: "role_id",
+            type: "list",
+            message: "What is this employee's new role?",
+            choices: function () {
+              var roleArray = [];
+              for (var i = 0; i < results.length; i++) {
+                const roleToUpdate = {
+                  name: `${results[i].title}`,
+                  value: results[i].id,
+                };
+                roleArray.push(roleToUpdate);
+              }
+              return roleArray;
+            },
+          },
+          {
+            type: "list",
+            name: "id",
+            message: "Which employee would you like to update?",
+            choices: function () {
+              var employeeArray = [];
+              for (var i = 0; i < response.length; i++) {
+                const employeeToUpdate = {
+                  name: `${response[i].first_name} ${response[i].last_name}`,
+                  value: response[i].id,
+                };
+                employeeArray.push(employeeToUpdate);
+              }
+              return employeeArray;
+            },
+          },
+        ])
+        .then((response) => {
+          console.log(response);
+          connection.query(
+            "UPDATE employee SET ? WHERE ?;",
+            [
+              {
+                role_id: response.role_id,
+              },
+              {
+                id: response.id,
+              },
+            ],
+            (error) => {
+              if (error) throw error;
+              connection.query(
+                `SELECT employee.first_name, employee.last_name, role.title From 
+          employee LEFT Join role ON employee.role_id = role.id;`,
+                (error, res) => {
+                  if (error) throw error;
+                  console.table(res);
+                  callback(error, results);
+                }
+              );
+            }
+          );
+        });
+    });
+  });
+}
+
+function removeEmployee(callback) {
   connection.query("SELECT * FROM employee", function (error, results) {
     if (error) throw error;
-    const employeeArray = results.map(({ id, first_name, last_name }) => ({
-      name: `${first_name} ${last_name}`,
-      value: id,
-    }));
     inquirer
-      .prompt([
-        {
-          name: "employeeName",
-          type: "list",
-          message: "What employee would you like to update?",
-          choices: employeeArray,
-        },
-        {
-          name: "f_Name",
-          type: "input",
-          message: "What is the employee's first name?",
-        },
-        {
-          name: "l_Name",
-          type: "input",
-          message: "What is the employee's last name?",
-        },
-      ])
-      .then((response) => {
-        let targetId;
-        for (let i = 0; i < results.length; i++) {
-          if (results[i].id === response.name) {
-            targetId = results[i].id;
+      .prompt({
+        name: "id",
+        type: "list",
+        message: "Which employee would you like to delete?",
+        choices: function () {
+          var employeeArray = [];
+          for (var i = 0; i < results.length; i++) {
+            const Obj = {
+              name: `${results[i].first_name} ${results[i].last_name}`,
+              value: results[i].id,
+            };
+            employeeArray.push(Obj);
           }
-        }
-        connection.query(
-          `UPDATE employee SET ? WHERE id = ?`,
-          [response.f_Name, response.l_Name, targetId],
-          function (error) {
+          return employeeArray;
+        },
+      })
+      .then(function ({ id }) {
+        const query = "DELETE FROM employee WHERE id = ?";
+        connection.query(query, id, function (error, results) {
+          if (error) throw error;
+          connection.query("SELECT * FROM employee", (error, res) => {
             if (error) throw error;
+            console.log("Your delete was successful");
+            console.table(res);
             callback(error, results);
-          }
-        );
+          });
+        });
       });
   });
 }
@@ -259,5 +364,7 @@ module.exports = {
   addEmployee,
   addDepartment,
   addRole,
-  updateEmployee,
+  // updateEmployee,
+  updateEmployeeRole,
+  removeEmployee,
 };
