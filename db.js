@@ -23,7 +23,7 @@ function connect(callback) {
 function viewEmployees(callback) {
   connection.query(
     "SELECT employee.id, employee.first_name, employee.last_name, department.department_name, role.salary, manager.first_name AS manager_first, manager.last_name AS manager_last FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id LEFT JOIN employee manager ON manager.id = employee.manager_id;",
-    function (error, results, fields) {
+    function (error, results) {
       // console.log(error);
       // console.log(results);
       // console.log(fields);
@@ -35,7 +35,7 @@ function viewEmployees(callback) {
 function viewEmployeeDepartment(callback) {
   connection.query(
     "SELECT employee.id, employee.first_name, employee.last_name, department.department_name, role.salary, manager.first_name AS manager_first, manager.last_name AS manager_last FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id LEFT JOIN employee manager ON manager.id = employee.manager_id ORDER BY department_id;",
-    function (error, results, fields) {
+    function (error, results) {
       // console.log(error);
       // console.log(results);
       // console.log(fields);
@@ -47,7 +47,7 @@ function viewEmployeeDepartment(callback) {
 function viewEmployeeManager(callback) {
   connection.query(
     "SELECT employee.id, employee.first_name, employee.last_name, role.title, department.department_name, employee.manager_id, manager.first_name AS manager_first, manager.last_name AS manager_last FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id LEFT JOIN employee manager ON manager.id = employee.manager_id ORDER BY employee.manager_id;",
-    function (error, results, fields) {
+    function (error, results) {
       // console.log(error);
       // console.log(results);
       // console.log(fields);
@@ -57,9 +57,9 @@ function viewEmployeeManager(callback) {
 }
 
 function addEmployee(callback) {
-  connection.query("SELECT * FROM role", function (error, results, fields) {
+  connection.query("SELECT * FROM role", function (error, results) {
     if (error) throw error;
-    const departmentArray = results.map((entry) => entry.title);
+    const departmentArray = results.map((data) => data.title);
     inquirer
       .prompt([
         {
@@ -127,50 +127,83 @@ function addDepartment(callback) {
 }
 
 function addRole(callback) {
-  connection.query("SELECT * FROM department", function (
-    error,
-    results,
-    fields
-  ) {
+  connection.query("SELECT * FROM role", function (error, results) {
     if (error) throw error;
-    const departmentArray = results.map((entry) => entry.department_name);
+    const departmentArray = results.map((data) => data.department_id);
     inquirer
       .prompt([
         {
-          name: "addRole",
+          name: "title",
           type: "input",
           message: "What role would you like to add?",
         },
         {
-          name: "newSalary",
+          name: "salary",
           type: "input",
           message: "What is the salary of this new role?",
         },
         {
-          name: "departmentId",
+          name: "department_id",
           type: "list",
-          message: "Which Department would you like to add this role into?",
+          message: "Which department would you like to add this role into?",
           choices: departmentArray,
         },
       ])
-      .then((response) => {
-        let newRole = {};
+      .then((results) => {
+        console.log(results);
+        connection.query("INSERT INTO role SET ?", results, (err) => {
+          if (err) throw err;
+          connection.query("SELECT * FROM role", (err, res) => {
+            if (err) throw err;
+            console.table(res);
+            callback(error, results);
+          });
+        });
+      });
+  });
+}
+
+function updateEmployee(callback) {
+  connection.query("SELECT * FROM employee", function (error, results) {
+    if (error) throw error;
+    const employeeArray = results.map(({ id, first_name, last_name }) => ({
+      name: `${first_name} ${last_name}`,
+      value: id,
+    }));
+    inquirer
+      .prompt([
+        {
+          name: "employeeName",
+          type: "list",
+          message: "What employee would you like to update?",
+          choices: employeeArray,
+        },
+        {
+          name: "f_Name",
+          type: "input",
+          message: "What is the employee's first name?",
+        },
+        {
+          name: "l_Name",
+          type: "input",
+          message: "What is the employee's last name?",
+        },
+      ])
+      .then((results) => {
+        let targetId;
         for (let i = 0; i < results.length; i++) {
-          if (results[i].name === response.departmentId) {
-            newRole = results[i];
+          if (results[i].id === results.name) {
+            targetId = results[i].id;
           }
         }
-        const { addRole, newSalary } = response;
         connection.query(
-          "INSERT INTO role SET ?",
-          {
-            title: addRole,
-            salary: newSalary,
-            department_id: newRole.id,
-          },
-          function (error) {
-            if (error) throw error;
-            callback(error, results);
+          `UPDATE employee SET first_name = ?, last_name = ? WHERE id = ?`,
+          (error, response) => {
+            [response.f_Name, response.l_Name, targetId],
+              function (error) {
+                if (error) throw error;
+                callback(error, results);
+              };
           }
         );
       });
@@ -185,4 +218,5 @@ module.exports = {
   addEmployee,
   addDepartment,
   addRole,
+  updateEmployee,
 };

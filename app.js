@@ -15,9 +15,10 @@ function init() {
         "Add Employee",
         "Add a Department",
         "Add a Role",
-        "Remove Employee",
+        "Update Employee",
         "Update Employee Role",
         "Update Employee Manager",
+        "Remove Employee",
         "Exit",
       ],
     })
@@ -39,17 +40,20 @@ function init() {
         case "Add a Department":
           db.addDepartment(newDepartment);
           break;
-          case "Add a Role":
+        case "Add a Role":
           db.addRole(newRole);
           break;
-        case "Remove Employee":
-          db.removeEmployee();
+        case "Update Employee":
+          db.updateEmployee(newEmployee);
           break;
         case "Update Employee Role":
           db.updateEmployeeRole();
           break;
         case "Update Employee Manager":
           db.updateEmployeeManager();
+          break;
+        case "Remove Employee":
+          db.removeEmployee();
           break;
         default:
           process.exit();
@@ -80,6 +84,7 @@ function newRole(error, results) {
   // console.table(results);
   init();
 }
+
 // connect to the mysql server and sql database
 db.connect(function (err) {
   if (err) throw err;
