@@ -163,93 +163,6 @@ function addRole(callback) {
       });
   });
 }
-// function updateEmployee(callback) {
-//   connection.query("SELECT * FROM employee", function (error, results) {
-//     if (error) throw error;
-//     const employeeArray = results.map(({ id, first_name, last_name }) => ({
-//       name: `${first_name} ${last_name}`,
-//       value: id,
-//     }));
-//     inquirer
-//       .prompt([
-//         {
-//           name: "employeeName",
-//           type: "list",
-//           message: "What employee would you like to update?",
-//           choices: employeeArray,
-//         },
-//         {
-//           name: "f_Name",
-//           type: "input",
-//           message: "What is the employee's first name?",
-//         },
-//         {
-//           name: "l_Name",
-//           type: "input",
-//           message: "What is the employee's last name?",
-//         },
-//       ])
-//       .then((results) => {
-//         let targetId;
-//         for (let i = 0; i < results.length; i++) {
-//           if (results[i].id === results.name) {
-//             targetId = results[i].id;
-//           }
-//         }
-//         connection.query(
-//           `UPDATE employee SET first_name = ${results.f_Name}, last_name = ${results.l_Name} WHERE id = ${results.targetId}`,
-//           (error, response) => {
-//             if (error) throw error;
-//             callback(error, results);
-//           }
-//         );
-//       });
-//   });
-// }
-// function updateEmployee() {
-//   connection.query("SELECT * FROM employee", function (error, results) {
-//     if (error) throw error;
-//     const employeeArray = results.map(({ id, first_name, last_name }) => ({
-//       name: `${first_name} ${last_name}`,
-//       value: id,
-//     }));
-//     inquirer
-//       .prompt([
-//         {
-//           name: "employeeName",
-//           type: "list",
-//           message: "What employee would you like to update?",
-//           choices: employeeArray,
-//         },
-//         {
-//           name: "f_Name",
-//           type: "input",
-//           message: "What is the employee's first name?",
-//         },
-//         {
-//           name: "l_Name",
-//           type: "input",
-//           message: "What is the employee's last name?",
-//         },
-//       ])
-//       .then((response) => {
-//         let targetId;
-//         for (let i = 0; i < results.length; i++) {
-//           if (results[i].id === response.name) {
-//             targetId = results[i].id;
-//           }
-//         }
-//         connection.query(
-//           `UPDATE employee SET ? WHERE id = ?`,
-//           [response.f_Name, response.l_Name, targetId],
-//           function (error) {
-//             if (error) throw error;
-//             callback(error, results);
-//           }
-//         );
-//       });
-//   });
-// }
 
 function updateEmployeeRole(callback) {
   connection.query("SELECT * FROM role", (error, results) => {
@@ -364,7 +277,6 @@ module.exports = {
   addEmployee,
   addDepartment,
   addRole,
-  // updateEmployee,
   updateEmployeeRole,
   removeEmployee,
 };

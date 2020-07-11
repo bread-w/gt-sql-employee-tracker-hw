@@ -1,6 +1,5 @@
 var inquirer = require("inquirer");
 var db = require("./db.js");
-// require("console.table");
 
 function init() {
   inquirer
@@ -15,15 +14,12 @@ function init() {
         "Add Employee",
         "Add a Department",
         "Add a Role",
-        // "Update Employee",
         "Update Employee Role",
-        // "Update Employee Manager",
         "Remove Employee",
         "Exit",
       ],
     })
     .then(function (response) {
-      // based on their answer, either call the bid or the post functions
       switch (response.menu) {
         case "View all Employees":
           db.viewEmployees(showResults);
@@ -43,15 +39,9 @@ function init() {
         case "Add a Role":
           db.addRole(newRole);
           break;
-        // case "Update Employee":
-        //   db.updateEmployee(newEmployee);
-        //   break;
         case "Update Employee Role":
           db.updateEmployeeRole(newRole);
           break;
-        // case "Update Employee Manager":
-        //   db.updateEmployeeManager();
-        //   break;
         case "Remove Employee":
           db.removeEmployee(deleteEmployee);
           break;
@@ -62,32 +52,24 @@ function init() {
 }
 
 function showResults(error, results) {
-  // console.log(error);
   console.table(results);
   init();
 }
 
 function newEmployee(error, results) {
-  // console.log(error);
-  // console.table(results);
+
   init();
 }
 
 function newDepartment(error, results) {
-  // console.log(error);
-  // console.table(results);
   init();
 }
 
 function newRole(error, results) {
-  // console.log(error);
-  // console.table(results);
   init();
 }
 
 function deleteEmployee(error, results) {
-  // console.log(error);
-  // console.table(results);
   init();
 }
 
